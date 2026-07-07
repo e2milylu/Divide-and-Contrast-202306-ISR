@@ -31,6 +31,7 @@ class ContrastiveMultiMlp(nn.Module):
         self.latent_embeddings = torch.rand([codebook_size, self.embedding_size])
 
         if make_ff:
+            #每一个都有3层也就是3次变换
             self.ffr = self._make_ff(dropout,
                                      self.embedding_size,
                                      hidden_size,
@@ -69,7 +70,7 @@ class ContrastiveMultiMlp(nn.Module):
             self.att_qa = SimpleConcatAttention(emb_dim=self.embedding_size)
 
     def _make_ff(self, dropout, in_size, hidden_size, hidden_layers, in_bn=True, hid_bn=True, out_bn=True, out=True):
-
+        #MLP
         def get_linear(in_size, hidden_size):
             l = torch.nn.Linear(in_size, hidden_size)
             # torch.nn.init.xavier_normal_(l.weight.data, gain=torch.nn.init.calculate_gain('relu'))
